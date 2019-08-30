@@ -18,11 +18,24 @@
 ## the completed R code for the assignment.
 
 ## makeCacheMatrix: This function creates a special "matrix" object
-## that can cache its inverse..
+## that can cache its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
+      i <- NULL
+      set <- function(y) {
+        x <<- y
+        i <<- NULL
+      }
+      get <- function() x
+      setInverse <- function(inverse) i <<- inverse
+      getInverse <- function() i
+      list(set = set, get = get,
+           setInverse = setInverse,
+           getInverse = getInverse)
+  }
+
   
-}
+
       
 
 ## This function computes the inverse of the special
@@ -31,5 +44,13 @@ makeCacheMatrix <- function(x = matrix()) {
 ## `cacheSolve` should retrieve the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
-
+      i <- x$getInverse()
+      if(!is.null(i)) {
+        message("getting cached data")
+        return(i)
+      }
+      data <- x$get()
+      i <- inverse(data, ...)
+      x$setInverse(i)
+      i
 }
