@@ -20,6 +20,20 @@
 ## makeCacheMatrix: This function creates a special "matrix" object
 ## that can cache its inverse.
 
+## testing:
+## x <- makeCacheMatrix()
+## x$set(matrix(1:4,2,2))
+## 1. cacheSolve(x)
+## > cacheSolve(x)
+## [,1] [,2]
+## [1,]   -2  1.5
+## [2,]    1 -0.5
+## 2. cacheSolve(x)
+## getting cached data
+## [,1] [,2]
+## [1,]   -2  1.5
+## [2,]    1 -0.5
+
 
 makeCacheMatrix <- function(x = matrix()) {
       i <- NULL
@@ -50,10 +64,10 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
   
-      ## get inverse from cache
+      ##get inverse from cache
       i <- x$getInverse()
       
-      ## if already cached, return
+      ##if already cached, return
       if(!is.null(i)) {
         message("getting cached data")
         return(i)
